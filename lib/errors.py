@@ -6,7 +6,7 @@ from .config import *
 class KsInvalidTokenError(Exception):
     """Exception raised for invalid file extensions."""
     def __init__(self):
-        self.message = f'Invalid API token. After creating an account, generate a new one at https://kleenscan.com/profile".'
+        self.message = 'Invalid API token. After creating an account, generate a new one at https://kleenscan.com/profile.'
         super().__init__(self.message)
 
 
