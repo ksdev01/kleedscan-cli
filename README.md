@@ -70,7 +70,6 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
   out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
 
-
 Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
   out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str 
