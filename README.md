@@ -48,7 +48,8 @@ kleenscan -t <api_token> -u https://example.com --format json --outfile results.
 from kleenscan.kleenscan import Kleenscan
 '''
 
-# Kleenscan() args:
+# Kleenscan class constructor args:
+
 Kleenscan(x_auth_token: str,         # XAuth token generated at https://kleenscan.com/profile (required)
   verbose: bool,                     # Verbose, default is True, if set to false the library only returns results from called methods (not required and can be omitted).
   max_minutes: int                   # Max scan in minutes, is AV vendors are delaying executing this can be used to decrease overall scantime (not required and can be omitted).
