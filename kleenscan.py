@@ -180,7 +180,7 @@ class Kleenscan:
 
 	def scan_url(self, url: str, av_list=[], output_format='', out_file=None) -> str:
 		if not url:
-			raise NoUrlError
+			raise KsNoUrlError
 
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Beginning route token extraction process on url "{url}", be patient this may take some time...')
