@@ -78,12 +78,12 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
 
 Kleenscan errors (from kleenscan.lib.errors import *):
 
-kleenscan.lib.errors.KsInvalidTokenError: Rose when an invalid API token is provided.
-kleenscan.lib.errors.KsApiError: Low level API errors which occur with HTTP requests.
-kleenscan.lib.errors.KsNoFileError: No file string provided to the Kleenscan.scan method.
-kleenscan.lib.errors.KsNoUrlError: No URL string provided to the Kleenscan.scan_url method.
-kleenscan.lib.errors.KsFileTooLargeError: File provided to the Kleenscan.scan method is too large and exceeds Kleenscan API fize size limits.
-kleenscan.lib.errors.KsFileEmptyError: File provided to the Kleenscan.scan method is empty and cannot be scanned.
+kleenscan.lib.errors.KsInvalidTokenError   # Rose when an invalid API token is provided.
+kleenscan.lib.errors.KsApiError            # Low level API errors which occur with HTTP requests.
+kleenscan.lib.errors.KsNoFileError         # No file string provided to the Kleenscan.scan method.
+kleenscan.lib.errors.KsNoUrlError          # No URL string provided to the Kleenscan.scan_url method.
+kleenscan.lib.errors.KsFileTooLargeError   # File provided to the Kleenscan.scan method is too large and exceeds Kleenscan API fize size limits.
+kleenscan.lib.errors.KsFileEmptyError      # File provided to the Kleenscan.scan method is empty and cannot be scanned.
 '''
 
 
