@@ -33,7 +33,7 @@ kleenscan -t <api_token> -f binary.exe --minutes 1 --antiviruses avg microsoftde
 kleenscan -t <api_token> -u https://google.com --minutes 1 --antiviruses avg microsoftdefender avast --minutes 1
 
 # File scan and output to YAML and only output the YAML results to standard output (--silent/-s excludes real-time verbosity):
-kleenscan -t <api_token> -f binary.exe --format yaml --silent --minutes 1
+kleenscan -t <api_token> -f binary.exe --format yaml --silent --show --minutes 1
 
 # File scan and output to TOML and store results to a file and standard output (--show/-sh outputs the formatted results):
 kleenscan -t <api_token> -f binary.exe --format toml --show --outfile results.toml --minutes 1
