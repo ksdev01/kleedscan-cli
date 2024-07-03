@@ -45,7 +45,7 @@ kleenscan -t <api_token> -u https://example.com --format json --outfile results.
 
 ## Python library/module usage
 ```python
-from kleenscan import Kleenscan
+from kleenscan.kleenscan import Kleenscan
 '''
 
 # Kleenscan() args:
