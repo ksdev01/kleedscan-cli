@@ -76,7 +76,7 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
 ) -> str 
 
 
-Kleenscan errors (from kleenscan.kleenscan.lib import errors:
+Kleenscan errors (from kleenscan.lib.errors import *):
 
 kleenscan.lib.errors.KsInvalidTokenError: Rose when an invalid API token is provided.
 kleenscan.lib.errors.KsApiError: Low level API errors which occur with HTTP requests.
