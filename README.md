@@ -44,10 +44,9 @@ kleenscan -t <api_token> -u https://example.com --format json --outfile results.
 ```
 
 ## Python library/module usage
-```
-from kleenscan import Kleenscan
-
+```python
 '''
+from kleenscan import Kleenscan
 
 # Kleenscan() args:
 Kleenscan(x_auth_token: str,         # XAuth token generated at https://kleenscan.com/profile (required)
@@ -74,17 +73,17 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
 Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
   out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str 
-'''
 
 
-# Kleenscan errors:
+Kleenscan errors:
+
 KsInvalidTokenError: Rose when an invalid API token is provided.
 KsApiError: Low level API errors which occur with HTTP requests.
 KsNoFileError: No file string provided to the Kleenscan.scan method.
 KsNoUrlError: No URL string provided to the Kleenscan.scan_url method.
 KsFileTooLargeError: File provided to the Kleenscan.scan method is too large and exceeds Kleenscan API fize size limits.
 KsFileEmptyError: File provided to the Kleenscan.scan method is empty and cannot be scanned.
-
+'''
 
 
 # Code examples:
