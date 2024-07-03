@@ -45,8 +45,8 @@ kleenscan -t <api_token> -u https://example.com --format json --outfile results.
 
 ## Python library/module usage
 ```python
-'''
 from kleenscan import Kleenscan
+'''
 
 # Kleenscan() args:
 Kleenscan(x_auth_token: str,         # XAuth token generated at https://kleenscan.com/profile (required)
