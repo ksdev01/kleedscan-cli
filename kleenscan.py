@@ -256,10 +256,11 @@ class Kleenscan:
 		api_data = json.loads(result)
 
 		# Notify the user.
-		for av_id, av_list in api_data['data'].items():
-			self.logger.info(f'{SUCCESS_NOTIF} {av_id}')
-			for av_name in av_list:
-				self.logger.info(f'\t - {av_name}')
+		if self.verbose:
+			for av_id, av_list in api_data['data'].items():
+				self.logger.info(f'{SUCCESS_NOTIF} {av_id}')
+				for av_name in av_list:
+					self.logger.info(f'\t - {av_name}')
 
 		# Format the result.
 		result = format_result(output_format, result)
