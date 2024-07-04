@@ -97,6 +97,8 @@ kleenscan.lib.errors.KsRemoteFileTooLargeError  # The file hosted on the provide
 kleenscan.lib.errors.KsGetFileInfoFailedError   # Failed to get information on the file hosted on the provided URL/server to the Kleenscan.scan_urlfile method.
 kleenscan.lib.errors.KsNoFileHostedError        # No file is hosted on the provided URL/server to the Kleenscan.scan_urlfile method.
 kleenscan.lib.errors.KsFileDownloadFailedError  # The file hosted on the provided URL/server to the Kleenscan.scan_urlfile method cannot be downloaded.
+kleenscan.lib.errors.KsDeadLinkError            # Cannot connect to the URL/server provided to the Kleenscan.scan_urlfile method.
+
 '''
 
 
