@@ -58,12 +58,12 @@ from kleenscan.kleenscan import Kleenscan
 ks = Kleenscan('<api_token>', verbose=False)
 ```
 
-### Class Constructor
+### Kleenscan Class Constructor
 
 ```python
 Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (required)
-verbose: bool = True,          # Enable verbose output (default is True)
-max_minutes: int = None        # Maximum scan duration in minutes (optional)
+ verbose: bool = True,         # Enable verbose output (default is True)
+ max_minutes: int = None       # Maximum scan duration in minutes (optional)
 )
 ```
 
@@ -72,33 +72,33 @@ max_minutes: int = None        # Maximum scan duration in minutes (optional)
   **scan_urlfile**: Scan a file locally on disk
   ```python
 Kleenscan.scan(file: str,            # Absolute path to file on local disk to be scanned.
-  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+   av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+   output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+   out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
   ```
 
 **scan_urlfile**: Scan a file hosted on a URL
   ```python
 Kleenscan.scan_urlfile(file: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
-  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+   av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+   output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+   out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
   ```
 **scan_url**: Scan a URL
   ```python
 Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain and port number if any (required).
-  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+   av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+   output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+   out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
 
   ```
 **av_list**: List available antivirus engines
   ```python
 Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+   out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str 
   ```
 
