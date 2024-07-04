@@ -1,148 +1,171 @@
-# Kleenscan
 
-Kleenscan is a Python library and command-line tool for scanning files and URLs with various antivirus engines provided by [Kleenscan](https://kleenscan.com).
+# Kleenscan Documentation
+
+Kleenscan is a Python library and command-line tool for scanning files and URLs using various antivirus engines provided by [Kleenscan](https://kleenscan.com).
 <img width="1638" alt="image" src="https://github.com/ksdev01/kleenscan-cli/assets/174640881/4a58916d-b807-4da3-95ac-3bdc10c8ba2a">
 
 
 ## Installation
 
-You can install Kleenscan using pip3/pip:
+Install Kleenscan using pip3 or pip:
 
-```
+```sh
 pip install kleenscan
 ```
 
-## Command line usage
+## Command Line Usage
 
-```
-# Help command:
+```sh
+# Display help
 kleenscan -h
 
-# Simple file scan (max scan wait 1 minute):
+# Scan a local file with a maximum wait time of 1 minute
 kleenscan -t <api_token> -f binary.exe --minutes 1
 
-# Simple remote file scan (max scan wait 1 minute):
+# Scan a remote file with a maximum wait time of 1 minute
 kleenscan -t <api_token> --urlfile https://example.com/binary.exe --minutes 1
 
-# Simple url scan (max scan wait 1 minute):
+# Scan a URL with a maximum wait time of 1 minute
 kleenscan -t <api_token> -u https://example.com --minutes 1
 
-# List available antivirus:
+# List available antivirus engines
 kleenscan --token <api_token> -l
 
-# Simple file scan using a list of antivirus:
-kleenscan -t <api_token> -f binary.exe --minutes 1 --antiviruses avg microsoftdefender avast --minutes 1
+# Scan a local file using specified antivirus engines
+kleenscan -t <api_token> -f binary.exe --minutes 1 --antiviruses avg microsoftdefender avast
 
-# Simple url scan using a list of antivirus:
-kleenscan -t <api_token> -u https://google.com --minutes 1 --antiviruses avg microsoftdefender avast --minutes 1
+# Scan a URL using specified antivirus engines
+kleenscan -t <api_token> -u https://google.com --minutes 1 --antiviruses avg microsoftdefender avast
 
-# File scan and output to YAML and only output the YAML results to standard output (--silent/-s excludes real-time verbosity):
+# Scan a file and output results in YAML format, suppressing real-time output
 kleenscan -t <api_token> -f binary.exe --format yaml --silent --minutes 1
 
-# File scan and output to TOML and store results to a file and standard output (--show/-sh outputs the formatted results):
+# Scan a file and output results in TOML format, storing results in a file and displaying them
 kleenscan -t <api_token> -f binary.exe --format toml --show --outfile results.toml --minutes 1
 
-# Url scan and output to JSON and store results to a file:
+# Scan a URL and output results in JSON format, storing results in a file
 kleenscan -t <api_token> -u https://example.com --format json --outfile results.json --minutes 1
-
 ```
 
-## Python library/module usage
+## Python Library Usage
+
+### Importing and Initializing Kleenscan
+
 ```python
 from kleenscan.kleenscan import Kleenscan
-'''
 
-# Kleenscan class constructor args:
-
-Kleenscan(x_auth_token: str,         # XAuth token generated at https://kleenscan.com/profile (required)
-  verbose: bool,                     # Verbose, default is True, if set to false the library only returns results from called methods (not required and can be omitted).
-  max_minutes: int                   # Max scan in minutes, is AV vendors are delaying executing this can be used to decrease overall scantime (not required and can be omitted).
-)
-
-
-# Kleenscan methods, all return the string results of the format provided (default is JSON):
-
-Kleenscan.scan(file: str,            # Absolute path to file on local disk to be scanned.
-  av_list: list,                     # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
-) -> str
-
-Kleenscan.scan_urlfile(file: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
-  av_list: list,                     # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
-) -> str
-
-Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain and port number if any (required).
-  av_list: list,                     # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-  output_format: str,                # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
-) -> str
-
-Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
-  out_file: str                      # Output file to store results to e.g. "results.json" (not required and can be omitted).
-) -> str 
-
-
-Kleenscan errors (from kleenscan.lib.errors import *):
-
-kleenscan.lib.errors.KsInvalidTokenError        # Rose when an invalid API token is provided.
-kleenscan.lib.errors.KsApiError                 # Low level API errors which occur with HTTP requests.
-kleenscan.lib.errors.KsNoFileError              # No file string provided to the Kleenscan.scan method.
-kleenscan.lib.errors.KsNoUrlError               # No URL string provided to the Kleenscan.scan_url method.
-kleenscan.lib.errors.KsFileTooLargeError        # File provided to the Kleenscan.scan method is too large and exceeds Kleenscan API fize size limits.
-kleenscan.lib.errors.KsFileEmptyError           # File provided to the Kleenscan.scan method is empty and cannot be scanned.
-kleenscan.lib.errors.KsRemoteFileTooLargeError  # The file hosted on the provided URL/server to the Kleenscan.scan_urlfile method is too large and exceeds Kleenscan API fize size limits.
-kleenscan.lib.errors.KsGetFileInfoFailedError   # Failed to get information on the file hosted on the provided URL/server to the Kleenscan.scan_urlfile method.
-kleenscan.lib.errors.KsNoFileHostedError        # No file is hosted on the provided URL/server to the Kleenscan.scan_urlfile method.
-kleenscan.lib.errors.KsFileDownloadFailedError  # The file hosted on the provided URL/server to the Kleenscan.scan_urlfile method cannot be downloaded.
-kleenscan.lib.errors.KsDeadLinkError            # Cannot connect to the URL/server provided to the Kleenscan.scan_urlfile method.
-
-'''
-
-
-# Code examples:
-
-# Set API token and instantiate a Kleenscan instance:
+# Initialize Kleenscan with API token
 ks = Kleenscan('<api_token>', verbose=False)
+```
 
-# Simple file scan (default output is JSON):
+### Class Constructor
+
+```python
+Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (required)
+verbose: bool = True,          # Enable verbose output (default is True)
+max_minutes: int = None        # Maximum scan duration in minutes (optional)
+)
+```
+
+### Kleenscan Methods
+
+  **scan_urlfile**: Scan a file locally on disk
+  ```python
+Kleenscan.scan(file: str,            # Absolute path to file on local disk to be scanned.
+  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+) -> str
+  ```
+
+**scan_urlfile**: Scan a file hosted on a URL
+  ```python
+Kleenscan.scan_urlfile(file: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
+  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+) -> str
+  ```
+**scan_url**: Scan a URL
+  ```python
+Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain and port number if any (required).
+  av_list: list,                       # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
+  output_format: str,                  # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+) -> str
+
+  ```
+**av_list**: List available antivirus engines
+  ```python
+Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+  out_file: str                        # Output file to store results to e.g. "results.json" (not required and can be omitted).
+) -> str 
+  ```
+
+### Error Handling
+
+Import errors from `kleenscan.lib.errors`:
+```python
+from kleenscan.lib.errors import *
+```
+
+Possible errors:
+- `KsInvalidTokenError`: Invalid API token
+- `KsApiError`: API request error
+- `KsNoFileError`: No file provided for scanning
+- `KsNoUrlError`: No URL provided for scanning
+- `KsFileTooLargeError`: File exceeds size limits
+- `KsFileEmptyError`: Empty file cannot be scanned
+- `KsRemoteFileTooLargeError`: Remote file exceeds size limits
+- `KsGetFileInfoFailedError`: Failed to get information on remote file
+- `KsNoFileHostedError`: No file hosted on the provided URL
+- `KsFileDownloadFailedError`: Remote file cannot be downloaded
+- `KsDeadLinkError`: Cannot connect to the provided URL
+
+## Code Examples
+
+```python
+# Scan a local file
 result = ks.scan('binary.exe')
 print(result)
 
-# Simple remote file scan - will scan "binary.exe" from RAM (default output is JSON):
+# Scan a remote file
 result = ks.scan_urlfile('https://example.com/binary.exe')
 print(result)
 
-# Simple url scan (default output is JSON):
+# Scan a URL
 result = ks.scan_url('http://example.com')
 print(result)
 
-# Simple list antivirus (default output is JSON):
+# List available antivirus engines
 result = ks.av_list()
 print(result)
 
+# Scan a local file with specified antivirus engines
 result = ks.scan('binary.exe', av_list=['avg', 'avast'])
 print(result)
 
+# Scan a local file and output in YAML format
 result = ks.scan('binary.exe', output_format='yaml')
 print(result)
 
+# Scan a local file and store results in a YAML file
 result = ks.scan('binary.exe', out_file='result.yaml', output_format='yaml')
 print(result)
 
+# Scan a URL and output in YAML format
 result = ks.scan_url('http://example.com', output_format='yaml')
 print(result)
 
+# Scan a URL and store results in a YAML file
 result = ks.scan_url('http://example.com', out_file='result.yaml', output_format='yaml')
 print(result)
 
+# List available antivirus engines and output in YAML format
 result = ks.av_list(output_format='yaml')
 print(result)
 
+# List available antivirus engines and store results in a YAML file
 result = ks.av_list(out_file='result.yaml', output_format='yaml')
 print(result)
 ```
-
-
