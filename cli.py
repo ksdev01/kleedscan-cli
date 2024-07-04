@@ -27,6 +27,10 @@ def cli_run(args: argparse.ArgumentParser) -> None:
 	elif args.list:
 		result = ks.av_list(args.format, args.outfile)
 
+	# --remotefile/-rf
+	elif args.urlfile:
+		result = ks.scan_urlfile(args.urlfile, args.antiviruses, args.format, args.outfile)
+
 	# --show/-sh
 	if args.show:
 		print(result)
@@ -41,6 +45,7 @@ def main():
 	# Mutally exclusive arguments.
 	group = parser.add_mutually_exclusive_group()
 	group.add_argument('--file', '-f', type=str, help='scan a file using Kleenscan')
+	group.add_argument('--urlfile', '-uf', type=str, help='Download a remote file hosted on a HTTP server into memory and upload/scan the file from memory on Kleenscan (e.g.: -uf https://malicious.com/file.exe). This approach never touches disk')
 	group.add_argument('--url', '-u', type=str, help='scan a URL using Kleenscan')
 	group.add_argument('--list', '-l', action='store_true', help='list available anti-virus vendors on Kleenscan')
 
@@ -69,7 +74,12 @@ def main():
 			KsNoFileError,
 			KsNoUrlError,
 			KsFileEmptyError,
-			KsFileTooLargeError
+			KsFileTooLargeError,
+			KsRemoteFileTooLargeError,
+			KsGetFileInfoFailedError,
+			KsNoFileHostedError,
+			KsFileDownloadFailedError,
+			KsDeadLinkError
 		) as e:
 			sys.exit(f'[ERROR] {e}')
 

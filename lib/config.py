@@ -15,5 +15,5 @@ CLI_DESCRIPTION = f'Kleenscan command line interface application. Scan files, ur
 
 EXAMPLE_CTEXT = colored(YELLOW_COLOR, 'Example')
 CLI_EPILOG = f'''
-{EXAMPLE_CTEXT}: kleenscan -t <api_token> -f binary.exe --mins 1 --show
+{EXAMPLE_CTEXT}: kleenscan -t <api_token> -f binary.exe --mins 1
 '''

@@ -216,6 +216,41 @@ class Kleenscan:
 
 
 
+	def scan_urlfile(self, url: str, av_list=None, output_format='', out_file=None) -> str:
+		# Download file into memory.
+		self.logger.info(f'{INFO_NOTIF} Downloding remote file hosted on server "{url}" into memory/RAM, be patient this may take some time...')
+		file_data = self.ks_http.download_file_memory(url)
+
+
+		# Notify the user.
+		self.logger.info(f'{INFO_NOTIF} Beginning scan token extraction process on remote file hosted on server "{url}", be patient this may take some time...')
+
+		# Post the scan request.
+		api_data = self.ks_http.post_scan('https://kleenscan.com/api/v1/file/scan',
+			files={'path': file_data},
+			data={'avList': ','.join(av_list) if av_list else 'all'}
+		)
+
+		# Temporary token.
+		scan_token = api_data['data']['scan_token']
+
+		# Notify the user.
+		self.logger.info(f'{INFO_NOTIF} Extracted scan token {scan_token} for scan on file hosted on server "{url}". File scanning process will begin, this will take some time, be patient..')
+
+		# Wait for scan to complete.
+		result = self.__wait_complete(f'https://kleenscan.com/api/v1/file/result/{scan_token}', self.__check_file_status)
+
+		# Format the result.
+		result = format_result(output_format, result)
+
+		# Handle out_file.
+		self.__handle_out_file(out_file, result)
+
+		# Finally return result regardless.
+		return result
+
+
+
 	def av_list(self, output_format='', out_file=None) -> str:
 		result = self.ks_http.get_req('https://kleenscan.com/api/v1/get/avlist')
 		api_data = json.loads(result)

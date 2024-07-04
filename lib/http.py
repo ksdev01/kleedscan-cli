@@ -47,3 +47,42 @@ class Ks_http:
 			return json.loads(response.text)
 
 
+	@staticmethod
+	def download_file_memory(url: str) -> bytes:
+		try:
+			# Send a HEAD request to get the file size.
+			with requests.head(url) as response:
+				# Check if the request was successful.
+				if response.status_code != 200:
+					raise KsGetFileInfoFailedError(response.status_code)
+
+				# Get the content type from the headers
+				content_type = response.headers.get('Content-Type', '')
+
+	    		# Check if the content type is HTML/text.
+				if 'text/html' in content_type:
+					raise KsNoFileHostedError
+	    
+				# Get the file size in MB from the Content-Length header.
+				file_size_mb = int(response.headers.get('Content-Length', 0)) / 1024 / 1024
+
+				# Check if the file size in MB exceeds the KS max size in MB.
+				if file_size_mb >= MAX_FILE_MB:
+					raise KsRemoteFileTooLargeError
+
+				# Send a GET request to download the file.
+				with requests.get(url, stream=True) as response:
+
+					# Check if the request was successful.
+					if response.status_code != 200:
+						raise KsFileDownloadFailedError(response.status_code)
+
+					# Return file content.
+					return response.content
+
+			return b''
+		except (requests.ConnectionError, requests.Timeout, requests.RequestException) as e:
+			raise KsDeadLinkError(f'{e} caused by {type(e)}')
+
+
+
