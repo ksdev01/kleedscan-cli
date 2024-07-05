@@ -1,5 +1,5 @@
 
-# Kleenscan Documentation
+# Kleenscan
 
 Kleenscan is a Python library and command-line tool for scanning files and URLs using various antivirus engines provided by [Kleenscan](https://kleenscan.com).
 <img width="1638" alt="image" src="https://github.com/ksdev01/kleenscan-cli/assets/174640881/4a58916d-b807-4da3-95ac-3bdc10c8ba2a">
