@@ -139,7 +139,7 @@ Raises:
 
 **scan_urlfile**: Scan a file hosted on a URL
   ```python
-Kleenscan.scan_urlfile(url: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
+Kleenscan.scan_urlfile(url: str,     # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
    av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
    output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
    out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
