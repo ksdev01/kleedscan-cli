@@ -174,6 +174,6 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
 ) -> str 
   ```
 
-#### Global errors:
+### Global errors:
 - `KsApiError`: Low-level API request error, rose by each method which performs HTTP requests (i.e.: Kleenscan.scan, Kleenscan.scan_urlfile, Kleenscan.scan_url, Kleenscan.av_list)
 
