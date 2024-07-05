@@ -118,40 +118,40 @@ Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (r
 )
 ```
 Raises:
-- `KsInvalidTokenError`: Invalid API token
+- `KsInvalidTokenError`: Invalid `x_auth_token`
 
 ### Kleenscan Methods
 
   **scan_file**: Scan a file locally on disk
   ```python
 Kleenscan.scan(file: str,            # Absolute path to file on local disk to be scanned.
-   av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-   output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+   av_list: list,                      # Antivirus list e.g. `['avg', 'avast', 'mirosoftdefender']` (not required and can be omitted).
+   output_format: str,                 # Output format, e.g. `'toml'`, `'yaml'`, `'json'` (not required and can be omitted).
    out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
   ```
 Raises:
 
-- `KsNoFileError`: No file provided for scanning
-- `KsFileTooLargeError`: File exceeds size limits
-- `KsFileEmptyError`: Empty file cannot be scanned
+- `KsNoFileError`: No `file` provided for scanning
+- `KsFileTooLargeError`: `file` exceeds size limits
+- `KsFileEmptyError`: Empty `file` cannot be scanned
 
 
 **scan_urlfile**: Scan a file hosted on a URL
   ```python
-Kleenscan.scan_urlfile(file: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
-   av_list: list,                      # Antivirus list e.g. ['avg', 'avast', 'mirosoftdefender'] (not required and can be omitted).
-   output_format: str,                 # Output format, e.g. 'toml', 'yaml', 'json' (not required and can be omitted).
+Kleenscan.scan_urlfile(url: str,    # URL/server hosting file to be scanned, include scheme, domain and port number if any (required).
+   av_list: list,                      # Antivirus list e.g. `['avg', 'avast', 'mirosoftdefender']` (not required and can be omitted).
+   output_format: str,                 # Output format, e.g. `'toml'`, `'yaml'`, `'json'` (not required and can be omitted).
    out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str
   ```
 Raises:
-- `KsNoUrlError`: No URL provided for remote file scanning
+- `KsNoUrlError`: No `url` provided for remote file scanning
 - `KsRemoteFileTooLargeError`: Remote file exceeds size limits
 - `KsGetFileInfoFailedError`: Failed to get information on remote file
 - `KsNoFileHostedError`: No file hosted on the provided URL
 - `KsFileDownloadFailedError`: Remote file cannot be downloaded
-- `KsDeadLinkError`: Cannot connect to the provided URL
+- `KsDeadLinkError`: Cannot connect to the provided `url`
 
   
 **scan_url**: Scan a URL
@@ -164,7 +164,7 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
 
   ```
 Raises:
-- `KsNoUrlError`: No URL provided for scanning
+- `KsNoUrlError`: No `url` provided for scanning
 
   
 **av_list**: List available antivirus engines
