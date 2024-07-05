@@ -217,6 +217,9 @@ class Kleenscan:
 
 
 	def scan_urlfile(self, url: str, av_list=None, output_format='', out_file=None) -> str:
+		if not url:
+			raise KsNoUrlError
+
 		# Download file into memory.
 		self.logger.info(f'{INFO_NOTIF} Downloding remote file hosted on server "{url}" into memory/RAM, be patient this may take some time...')
 		file_data = self.ks_http.download_file_memory(url)
