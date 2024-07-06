@@ -118,6 +118,7 @@ Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (r
 )
 ```
 Raises:
+- `KsNoTokenError`: No token was provided to the `x_auth_token` argument
 - `KsInvalidTokenError`: Invalid `x_auth_token`
 
 ### Kleenscan Methods
