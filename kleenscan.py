@@ -41,7 +41,7 @@ class Kleenscan:
 
 
 	def check_token(self) -> bool:
-		api_data = self.ks_http.get_req_json('https://kleenscan.com/api/v1/get/avlist')
+		api_data = self.ks_http.get_req_json_noerr('https://kleenscan.com/api/v1/get/avlist')
 		if api_data['message'] in ('Authentication token is invalid',
 			'Invalid authentication token size'
 		):
@@ -259,11 +259,10 @@ class Kleenscan:
 		api_data = json.loads(result)
 
 		# Notify the user.
-		if self.verbose:
-			for av_id, av_list in api_data['data'].items():
-				self.logger.info(f'{SUCCESS_NOTIF} {av_id}')
-				for av_name in av_list:
-					self.logger.info(f'\t - {av_name}')
+		for av_id, av_list in api_data['data'].items():
+			self.logger.info(f'{SUCCESS_NOTIF} {av_id}')
+			for av_name in av_list:
+				self.logger.info(f'\t - {av_name}')
 
 		# Format the result.
 		result = format_result(output_format, result)

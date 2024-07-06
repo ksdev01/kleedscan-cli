@@ -47,6 +47,15 @@ class Ks_http:
 			return json.loads(response.text)
 
 
+
+	def get_req_json_noerr(self, url: str) -> dict:
+		with requests.get(url,
+			headers=self.headers,
+		) as response:
+			return json.loads(response.text)
+
+
+
 	@staticmethod
 	def download_file_memory(url: str) -> bytes:
 		try:
