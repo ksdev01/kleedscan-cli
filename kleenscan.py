@@ -16,6 +16,9 @@ from .lib.cli_colors import *
 
 class Kleenscan:
 	def __init__(self, x_auth_token: str, verbose=True, max_minutes=MAX_SCAN_TIME):
+		if not x_auth_token:
+			raise KsNoTokenError
+
 		self.ks_http = Ks_http(x_auth_token)
 		self.check_token()
 		self.logger = configure_logging() if verbose else logging

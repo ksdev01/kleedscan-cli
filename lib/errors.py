@@ -3,10 +3,15 @@ from .config import *
 
 
 
+class KsNoTokenError(Exception):
+    def __init__(self, message: str):
+        super().__init__('No token provided, please provide a API token. You can generate a new one at https://kleenscan.com/profile. ')
+
+
+
 class KsInvalidTokenError(Exception):
     def __init__(self):
-        self.message = 'Invalid API token. After creating an account, generate a new one at https://kleenscan.com/profile.'
-        super().__init__(self.message)
+        super().__init__('Invalid API token. After creating an account, generate a new one at https://kleenscan.com/profile.')
 
 
 
