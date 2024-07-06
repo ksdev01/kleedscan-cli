@@ -120,6 +120,7 @@ Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (r
 Raises:
 - `KsNoTokenError`: No token was provided to the `x_auth_token` argument
 - `KsInvalidTokenError`: Invalid `x_auth_token`
+- `KsApiError`: Low-level API request error.
 
 ### Kleenscan Methods
 
@@ -136,6 +137,7 @@ Raises:
 - `KsNoFileError`: No `file` provided for scanning
 - `KsFileTooLargeError`: `file` exceeds size limits
 - `KsFileEmptyError`: Empty `file` cannot be scanned
+- `KsApiError`: Low-level API request error.
 
 
 **scan_urlfile**: Scan a file hosted on a URL
@@ -153,6 +155,7 @@ Raises:
 - `KsNoFileHostedError`: No file hosted on the provided `url`
 - `KsFileDownloadFailedError`: Remote file cannot be downloaded
 - `KsDeadLinkError`: Cannot connect to the provided `url`
+- `KsApiError`: Low-level API request error.
 
   
 **scan_url**: Scan a URL
@@ -166,6 +169,7 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
   ```
 Raises:
 - `KsNoUrlError`: No `url` provided for scanning
+- `KsApiError`: Low-level API request error.
 
   
 **av_list**: List available antivirus engines
@@ -174,7 +178,4 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
    out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str 
   ```
-
-### Global errors:
-- `KsApiError`: Low-level API request error, rose by each method which performs HTTP requests (i.e.:` Kleenscan.scan`, `Kleenscan.scan_urlfile`, `Kleenscan.scan_url`, `Kleenscan.av_list`).
-
+- `KsApiError`: Low-level API request error.
