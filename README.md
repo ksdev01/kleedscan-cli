@@ -52,7 +52,7 @@ kleenscan -t <api_token> -u https://example.com --format json --outfile results.
 ### Importing `Kleenscan` and `errors`
 
 ```python
-from kleenscan.kleenscan import Kleenscan
+from kleenscan import Kleenscan
 from kleenscan.lib.errors import *
 ```
 
