@@ -21,6 +21,7 @@ class Kleenscan:
 		self.logger = configure_logging() if verbose else logging
 		self.max_minutes = max_minutes
 		self.scan_start_time = datetime.utcnow()
+		self.verbose=verbose
 
 
 
