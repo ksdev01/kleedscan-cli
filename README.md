@@ -178,4 +178,5 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
    out_file: str                       # Output file to store results to e.g. "results.json" (not required and can be omitted).
 ) -> str 
   ```
+Raises:
 - `KsApiError`: Low-level API request error.
