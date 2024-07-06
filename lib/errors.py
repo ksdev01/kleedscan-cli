@@ -4,7 +4,7 @@ from .config import *
 
 
 class KsNoTokenError(Exception):
-    def __init__(self, message: str):
+    def __init__(self):
         super().__init__('No token provided, please provide a API token. You can generate a new one at https://kleenscan.com/profile. ')
 
 
