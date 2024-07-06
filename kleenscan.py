@@ -13,6 +13,7 @@ from .lib.log_configure import configure_logging
 from .lib.cli_colors import *
 
 
+
 class Kleenscan:
 	def __init__(self, x_auth_token: str, verbose=True, max_minutes=MAX_SCAN_TIME):
 		self.ks_http = Ks_http(x_auth_token)
