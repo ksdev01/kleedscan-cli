@@ -18,16 +18,17 @@ from typing import Union
 
 
 def format_result(output_format: str, result: str) -> str:
-	output_format = output_format.lower()
 	ks_dict = json.loads(result)
-
-	if output_format == 'yaml':
-		return yaml.dump(ks_dict, default_flow_style=False)
-
-	elif output_format == 'toml':
-		return toml.dumps(ks_dict)
-
-	# elif output_format == 'xml':
-	#	return xml_dump(ks_dict)
-
+	if output_format:
+		output_format = output_format.lower()
+	
+		if output_format == 'yaml':
+			return yaml.dump(ks_dict, default_flow_style=False)
+	
+		elif output_format == 'toml':
+			return toml.dumps(ks_dict)
+	
+		# elif output_format == 'xml':
+		#	return xml_dump(ks_dict)
+	
 	return json.dumps(ks_dict, indent=5)
