@@ -69,10 +69,7 @@ def main():
 		args = parser.parse_args()
 		try:
 			cli_run(args)
-		except (KsInvalidTokenError,
-			KsApiError,
-			KsNoFileError,
-			KsNoUrlError,
+		except (KsApiError,
 			KsFileEmptyError,
 			KsFileTooLargeError,
 			KsRemoteFileTooLargeError,

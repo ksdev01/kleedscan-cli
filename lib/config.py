@@ -6,9 +6,6 @@ MAX_FILE_MB = 32
 
 MAX_SCAN_TIME = 4
 
-
-
-
 URL_CTEXT = colored(CYAN_COLOR, 'https://kleenscan.com/api_management')
 CLI_DESCRIPTION = f'Kleenscan command line interface application. Scan files, urls and list and view available anti-virus, simplified! See {URL_CTEXT} for more information.'
 

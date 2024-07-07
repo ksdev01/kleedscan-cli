@@ -3,6 +3,7 @@ import json
 import logging
 from datetime import datetime
 
+
 # Custom library imports:
 from .lib.http import Ks_http
 from .lib.files import *
@@ -11,14 +12,12 @@ from .lib.config import *
 from .lib.errors import *
 from .lib.log_configure import configure_logging
 from .lib.cli_colors import *
-
+from .lib.helpers import *
 
 
 class Kleenscan:
+	@check_types
 	def __init__(self, x_auth_token: str, verbose=True, max_minutes=MAX_SCAN_TIME):
-		if not x_auth_token:
-			raise KsNoTokenError
-
 		self.ks_http = Ks_http(x_auth_token)
 		self.check_token()
 		self.logger = configure_logging() if verbose else logging
@@ -44,7 +43,7 @@ class Kleenscan:
 
 
 
-	def check_token(self) -> bool:
+	def check_token(self) -> None:
 		api_data = self.ks_http.get_req_json_noerr('https://kleenscan.com/api/v1/get/avlist')
 		if api_data['message'] in ('Authentication token is invalid',
 			'Invalid authentication token size'
@@ -142,10 +141,8 @@ class Kleenscan:
 
 
 
-	def scan(self, file: str, av_list=None, output_format='', out_file=None) -> str:
-		if not file:
-			raise KsNoFileError
-
+	@check_types
+	def scan(self, file: str, av_list=None, output_format=None, out_file=None) -> str:
 		if not file_is_32mb(file):
 			raise KsFileTooLargeError
 
@@ -183,10 +180,8 @@ class Kleenscan:
 
 
 
-	def scan_url(self, url: str, av_list=[], output_format='', out_file=None) -> str:
-		if not url:
-			raise KsNoUrlError
-
+	@check_types
+	def scan_url(self, url: str, av_list=None, output_format=None, out_file=None) -> str:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Beginning route token extraction process on url "{url}", be patient this may take some time...')
 
@@ -221,10 +216,8 @@ class Kleenscan:
 
 
 
-	def scan_urlfile(self, url: str, av_list=None, output_format='', out_file=None) -> str:
-		if not url:
-			raise KsNoUrlError
-
+	@check_types
+	def scan_urlfile(self, url: str, av_list=None, output_format=None, out_file=None) -> str:
 		# Download file into memory.
 		self.logger.info(f'{INFO_NOTIF} Downloding remote file hosted on server "{url}" into memory/RAM, be patient this may take some time...')
 		file_data = self.ks_http.download_file_memory(url)
@@ -259,7 +252,8 @@ class Kleenscan:
 
 
 
-	def av_list(self, output_format='', out_file=None) -> str:
+	@check_types
+	def av_list(self, output_format=None, out_file=None) -> str:
 		result = self.ks_http.get_req('https://kleenscan.com/api/v1/get/avlist')
 		api_data = json.loads(result)
 
