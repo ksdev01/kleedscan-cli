@@ -106,6 +106,23 @@ result = ks.av_list(out_file='result.yaml', output_format='yaml')
 print(result)
 ```
 
+### Catching low level API errors and parsing the JSON result
+```python
+import json
+
+# Initialize Kleenscan with API token, default verbose is True for outputting scan progress, and arbitary API objects retrieved.
+ks = Kleenscan('<api_token>', verbose=False)
+
+try:
+  ks.scan('binary.exe', av_list=['non_existent_av_engine_to_invoke_error'])
+except KsApiError as e:
+  # Error example: {"success":false,"httpResponseCode":500,"message":"Antivirus strj does not exist.","data":null}
+  api_data = json.loads(e.message)
+  print(api_data['message']) # Outputs: "Antivirus non_existent_av_engine_to_invoke_error does not exist."
+
+
+```
+
 
 ## Documentation 
 
@@ -113,14 +130,15 @@ print(result)
 
 ```python
 Kleenscan(x_auth_token: str,   # API token from https://kleenscan.com/profile (required)
- verbose: bool = True,         # Enable verbose output (default is True)
- max_minutes: int = None       # Maximum scan duration in minutes (optional)
+ verbose: bool,                # Enable verbose output (not required and can be omitted, default is True)
+ max_minutes: int              # Maximum scan duration in minutes (not required and can be omitted, must be a positive integer)
 )
 ```
 Raises:
-- `KsNoTokenError`: No token was provided to the `x_auth_token` argument
 - `KsInvalidTokenError`: Invalid `x_auth_token`
-- `KsApiError`: Low-level API request error.
+- `KsApiError`: Low-level API request error
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `max_minutes=-1`)
+- `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `max_minutes='10'`)
 
 ### Kleenscan Methods
 
@@ -134,10 +152,12 @@ Kleenscan.scan(file: str,            # Absolute path to file on local disk to be
   ```
 Raises:
 
-- `KsNoFileError`: No `file` provided for scanning
 - `KsFileTooLargeError`: `file` exceeds size limits
 - `KsFileEmptyError`: Empty `file` cannot be scanned
-- `KsApiError`: Low-level API request error.
+- `KsApiError`: Low-level API request error
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
+
 
 
 **scan_urlfile**: Scan a file hosted on a URL
@@ -149,13 +169,16 @@ Kleenscan.scan_urlfile(url: str,     # URL/server hosting file to be scanned, in
 ) -> str
   ```
 Raises:
-- `KsNoUrlError`: No `url` provided for remote file scanning
 - `KsRemoteFileTooLargeError`: Remote file exceeds size limits
 - `KsGetFileInfoFailedError`: Failed to get information on remote file
 - `KsNoFileHostedError`: No file hosted on the provided `url`
 - `KsFileDownloadFailedError`: Remote file cannot be downloaded
 - `KsDeadLinkError`: Cannot connect to the provided `url`
-- `KsApiError`: Low-level API request error.
+- `KsApiError`: Low-level API request error
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
+
+
 
   
 **scan_url**: Scan a URL
@@ -168,8 +191,9 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
 
   ```
 Raises:
-- `KsNoUrlError`: No `url` provided for scanning
 - `KsApiError`: Low-level API request error.
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
 
   
 **av_list**: List available antivirus engines
@@ -179,4 +203,6 @@ Kleenscan.av_list(output_format: str # Output format, e.g. 'toml', 'yaml', 'json
 ) -> str 
   ```
 Raises:
-- `KsApiError`: Low-level API request error.
+- `KsApiError`: Low-level API request error
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `output_format=''` or `out_file=''`)
+- `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
