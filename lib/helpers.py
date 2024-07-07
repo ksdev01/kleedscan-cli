@@ -97,7 +97,7 @@ def check_types(func):
 
                 # Type check.
                 if value != None and not isinstance(value, param_type):
-                    raise TypeError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be {param_type.__name__}, got {type(value).__name__} with value {value}.')
+                    raise TypeError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be {param_type.__name__}, got: {type(value).__name__} with value: {value}.')
         
                 # Empty string check.
                 if param_type == str and value == '':
@@ -105,8 +105,14 @@ def check_types(func):
                 
                 # int range check.
                 if param_type == int and value <= 0:
-                    raise ValueError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be a positive number, got {value}.')
+                    raise ValueError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be a positive number, got: {value}.')
       
+                # Check if all values are string in a list.
+                if param_type == list:
+                    for element in value:
+                        if not isinstance(element, str):
+                            raise TypeError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be a list of strings, got: {value}.')
+  
 
         return func(*args, **kwargs)
 

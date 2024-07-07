@@ -3,12 +3,6 @@ from .config import *
 
 
 
-class KsNoTokenError(Exception):
-    def __init__(self):
-        super().__init__('No token provided, please provide a API token. You can generate a new one at https://kleenscan.com/profile. ')
-
-
-
 class KsInvalidTokenError(Exception):
     def __init__(self):
         super().__init__('Invalid API token. After creating an account, generate a new one at https://kleenscan.com/profile.')
@@ -17,19 +11,7 @@ class KsInvalidTokenError(Exception):
 
 class KsApiError(Exception):
     def __init__(self, message):
-        super().__init__(f'An error occurred with the kleenscan API: {message}')
-
-
-
-class KsNoFileError(Exception):
-    def __init__(self):
-        super().__init__('No file was provided to the file parameter. Make sure you include the absolute path to the file.')
-
-
-
-class KsNoUrlError(Exception):
-    def __init__(self):
-        super().__init__('No URL string was provided to the url parameter.')
+        super().__init__(message)
 
 
 
