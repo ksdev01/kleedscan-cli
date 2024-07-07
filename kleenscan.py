@@ -23,7 +23,6 @@ class Kleenscan:
 		self.check_token()
 		self.logger = configure_logging() if verbose else logging
 		self.max_minutes = max_minutes
-		self.scan_start_time = datetime.utcnow()
 		self.verbose = verbose
 
 
@@ -119,6 +118,7 @@ class Kleenscan:
 		checked_avs = []
 		detected_count = 0
 		response_text = None
+		scan_start_time = datetime.utcnow()
 		self.logger.info(f'{INFO_NOTIF} Press CTRL+C to terminate the scanning process at any point and save results to stdout and an outfile provided.')
 		try:
 			while True:
@@ -127,7 +127,7 @@ class Kleenscan:
 				finished, detected_count = target_method(api_data, checked_avs, detected_count)
 
 				# Check time in minutes, if equal to or greater than max minutes break the loop.
-				time_difference = datetime.utcnow() - self.scan_start_time
+				time_difference = datetime.utcnow() - scan_start_time
 				if finished or (time_difference.seconds >= self.max_minutes * 60):
 					break
 
