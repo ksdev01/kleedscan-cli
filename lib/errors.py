@@ -36,7 +36,7 @@ class KsRemoteFileTooLargeError(Exception):
 
 class KsGetFileInfoFailedError(Exception):
     def __init__(self, message: str):
-        super().__init__(f'Failed to get file info, HTTP statuc code: {message}')
+        super().__init__(f'Failed to get file info, HTTP status code: {message}')
 
 
 
