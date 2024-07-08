@@ -203,7 +203,7 @@ Raises:
 - `KsFileTooLargeError`: `file` exceeds size limits
 - `KsFileEmptyError`: Empty `file` cannot be scanned
 - `KsApiError`: Low-level API request error
-- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]` or `out_file=''`)
 - `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
 
 
@@ -223,7 +223,7 @@ Raises:
 - `KsFileDownloadFailedError`: Remote file cannot be downloaded
 - `KsDeadLinkError`: Cannot connect to the provided `url`
 - `KsApiError`: Low-level API request error
-- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]` or `out_file=''`)
 - `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
 
 
@@ -240,7 +240,7 @@ Kleenscan.scan_url(url: str,         # URL to be scanned, include scheme, domain
   ```
 Raises:
 - `KsApiError`: Low-level API request error.
-- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]`x or `out_file=''`)
+- `ValueError`: Rose when a invalid value is provided to any argument, even though it's the correct type (e.g.: `av_list=[1,2,3]` or `out_file=''`)
 - `TypeError`: Rose when a value of an invalid type is provided to any argument (e.g.: `output_format=1`)
 
   
