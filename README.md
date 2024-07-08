@@ -136,7 +136,7 @@ def get_av(api_data, av_quey):
     raise ValueError(f'{av_query} not found')
 
 # Target AV query.
-av_query = 'defendersdvs'
+av_query = 'defender'
 
 # # Verbose mode (default).
 ks = Kleenscan(TOKEN, max_minutes=1, verbose=False)
