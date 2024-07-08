@@ -80,9 +80,9 @@ def get_param_structure(method_name: str) -> dict:
 
 
 
-def check_types(func):
+def check_types(func) -> callable:
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> str:
         sig = inspect.signature(func)
         param_structure = get_param_structure(func.__name__)
         

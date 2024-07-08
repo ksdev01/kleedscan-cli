@@ -19,7 +19,7 @@ class Ks_http:
 
 
 
-	def post_scan(self, url: str, data: dict, files=None) -> str:
+	def post_scan(self, url: str, data: dict, files=None) -> dict:
 		with requests.post(url,
 			headers=self.headers,
 			files=files,
@@ -30,7 +30,7 @@ class Ks_http:
 
 
 
-	def get_req(self, url: str) -> dict:
+	def get_req(self, url: str) -> str:
 		with requests.get(url,
 			headers=self.headers,
 		) as response:

@@ -2,6 +2,7 @@ from time import sleep
 import json
 import logging
 from datetime import datetime
+from typing import *
 
 
 # Custom library imports:
@@ -27,7 +28,7 @@ class Kleenscan:
 
 
 	@staticmethod
-	def __handle_out_file(out_file: str, result: str) -> str:
+	def __handle_out_file(out_file: str, result: str) -> None:
 		# Write result to out_file.
 		if out_file and type(out_file) == str:
 			write_file(out_file, result)
@@ -35,7 +36,7 @@ class Kleenscan:
 
 
 	@staticmethod
-	def __sleep_count(count: int):
+	def __sleep_count(count: int) -> int:
 		sleep(count)
 		if count >= 2:
 			count -= 1
@@ -65,7 +66,7 @@ class Kleenscan:
 
 
 
-	def __check_status(self, data: list, checked_avs: list, detected_count: int) -> bool:
+	def __check_status(self, data: list, checked_avs: list, detected_count: int) -> tuple[bool, int]:
 		# Flag for keeping track of when avs are finished/not finished scanning.
 		finished = True
 		for av_dict in data:
@@ -117,7 +118,7 @@ class Kleenscan:
 
 
 
-	def __wait_complete(self, url: str, target_method: callable) -> str:
+	def __wait_complete(self, url: str, target_method: callable) -> Union[None, str]:
 		count = 6
 		checked_avs = []
 		detected_count = 0
@@ -126,9 +127,13 @@ class Kleenscan:
 		scan_start_time = datetime.utcnow()
 		self.logger.info(f'{INFO_NOTIF} Press CTRL+C to terminate the scanning process at any point and save results to stdout and an outfile provided.')
 		try:
+			# Scan loop.
 			while True:
+				# Send get request to KS API and parse API JSON data.
 				response_text = self.ks_http.get_req(url)
 				api_data = json.loads(response_text)
+
+				# Call target scanning method, for data extraction.
 				finished, detected_count, data = target_method(api_data, checked_avs, detected_count)
 
 				# Check time in minutes, if equal to or greater than max minutes break the loop.
@@ -139,14 +144,16 @@ class Kleenscan:
 				# Delay execution.
 				count = self.__sleep_count(count)
 
+		# Stop scanning via CTRL+C.
 		except KeyboardInterrupt:
 			pass
 
 		# Notify the user of unfinished antivirus engines.
+		self.logger.info(f'{INFO_NOTIF} Unfinished AV engines:')
 		for av_dict in data:
 			av_name = av_dict['avname']
 			if av_name not in checked_avs:
-				self.logger.info(f'{INFO_NOTIF} antivirus engine {av_name} scanning incomplete with status {av_dict["status"]}')
+				self.logger.info(f'\t - {av_name} (status: {av_dict["status"]})')
 		
 		self.logger.info(f'Detection ratio: {detected_count} / {len(checked_avs)}')
 		return response_text
