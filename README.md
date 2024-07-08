@@ -123,6 +123,53 @@ except KsApiError as e:
 
 ```
 
+### Putting things together
+```python
+import json
+
+TOKEN = '<insert_api_token_here>'
+
+def get_av(api_data, av_quey):
+    for av_name, av_desc in api_data.items():
+        if av_query.lower() in av_name or av_desc.lower():
+            return av_name
+    raise ValueError(f'{av_query} not found')
+
+# Target AV query.
+av_query = 'defendersdvs'
+
+# # Verbose mode (default).
+ks = Kleenscan(TOKEN, max_minutes=1, verbose=False)
+
+# List available antivirus engines..
+result = ks.av_list()
+api_data = json.loads(result)
+
+# Get AV engines for file scanning.
+file_avs = api_data['data']['file']
+
+# Get target antivirus name ID for file scanning.
+av_name = get_av(file_avs, av_query)
+
+# Scan file with target antivirus engine.
+result = ks.scan('malware.ps1', av_list=[av_name])
+print(result)
+
+# Scan remote file with target antivirus engine and store result to YAML file.
+result = ks.scan_urlfile('https://example.com/binary.exe', av_list=[av_name], out_file='out.yaml', output_format='yaml')
+print(result)
+
+# Get all url avs.
+url_avs = api_data['data']['url']
+
+# Get target antivirus name ID.
+av_name = get_av(url_avs, av_query)
+
+# Scan URL and output to a TOML string.
+result = ks.scan_url('https://example.com', av_list=[av_name], output_format='toml')
+print(result)
+```
+
 
 ## Documentation 
 
