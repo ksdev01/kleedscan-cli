@@ -139,7 +139,7 @@ def get_av(api_data, av_quey):
 # Target AV query.
 av_query = 'defender'
 
-# # Verbose mode (default).
+# Silent mode (useful for applications which don't want excessive output).
 ks = Kleenscan(TOKEN, max_minutes=1, verbose=False)
 
 # List available antivirus engines..
