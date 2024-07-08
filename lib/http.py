@@ -1,5 +1,6 @@
 import requests
 import json
+from typing import *
 
 
 # Custom Library imports:
@@ -19,7 +20,7 @@ class Ks_http:
 
 
 
-	def post_scan(self, url: str, data: dict, files=None) -> dict:
+	def post_scan(self, url: str, data: dict, files: Optional[str]=None) -> dict:
 		with requests.post(url,
 			headers=self.headers,
 			files=files,

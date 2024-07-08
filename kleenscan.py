@@ -66,7 +66,7 @@ class Kleenscan:
 
 
 
-	def __check_status(self, data: list, checked_avs: list, detected_count: int) -> tuple[bool, int]:
+	def __check_status(self, data: list[dict], checked_avs: list[str], detected_count: int) -> tuple[bool, int]:
 		# Flag for keeping track of when avs are finished/not finished scanning.
 		finished = True
 		for av_dict in data:
@@ -103,7 +103,7 @@ class Kleenscan:
 
 
 	# Wrapper method for accessing data structure.
-	def __check_file_status(self, api_data: list, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
+	def __check_file_status(self, api_data: dict, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
 		data = api_data['data']
 		finished, detected_count = self.__check_status(data, checked_avs, detected_count)
 		return finished, detected_count, data
@@ -111,7 +111,7 @@ class Kleenscan:
 
 
 	# Wrapper method for accessing data structure.
-	def __check_url_status(self, api_data: list, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
+	def __check_url_status(self, api_data: dict, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
 		data = api_data['data']['scanner_results']
 		finished, detected_count = self.__check_status(data, checked_avs, detected_count)
 		return finished, detected_count, data
@@ -161,7 +161,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan(self, file: str, av_list=None, output_format=None, out_file=None) -> str:
+	def scan(self, file: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		if not file_is_32mb(file):
 			raise KsFileTooLargeError
 
@@ -200,7 +200,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan_url(self, url: str, av_list=None, output_format=None, out_file=None) -> str:
+	def scan_url(self, url: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Beginning route token extraction process on url "{url}", be patient this may take some time...')
 
@@ -236,7 +236,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan_urlfile(self, url: str, av_list=None, output_format=None, out_file=None) -> str:
+	def scan_urlfile(self, url: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		# Download file into memory.
 		self.logger.info(f'{INFO_NOTIF} Downloding remote file hosted on server "{url}" into memory/RAM, be patient this may take some time...')
 		file_data = self.ks_http.download_file_memory(url)
@@ -272,7 +272,7 @@ class Kleenscan:
 
 
 	@check_types
-	def av_list(self, output_format=None, out_file=None) -> str:
+	def av_list(self, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		result = self.ks_http.get_req('https://kleenscan.com/api/v1/get/avlist')
 		api_data = json.loads(result)
 
