@@ -161,7 +161,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan(self, file: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
+	def scan(self, file: str, av_list: Optional[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		if not file_is_32mb(file):
 			raise KsFileTooLargeError
 
@@ -200,7 +200,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan_url(self, url: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
+	def scan_url(self, url: str, av_list: Optional[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Beginning route token extraction process on url "{url}", be patient this may take some time...')
 
@@ -236,7 +236,7 @@ class Kleenscan:
 
 
 	@check_types
-	def scan_urlfile(self, url: str, av_list: Option[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
+	def scan_urlfile(self, url: str, av_list: Optional[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		# Download file into memory.
 		self.logger.info(f'{INFO_NOTIF} Downloding remote file hosted on server "{url}" into memory/RAM, be patient this may take some time...')
 		file_data = self.ks_http.download_file_memory(url)
