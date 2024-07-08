@@ -160,6 +160,27 @@ class Kleenscan:
 
 
 
+	def __handle_output(self, result: dict, output_format: Union[None, str], out_file: Union[None, str]) -> str:
+		# Format the result.
+		result = format_result(output_format, result)
+
+		# Handle out_file.
+		self.__handle_out_file(out_file, result)
+
+		# Return formatted result.
+		return result
+
+
+
+	def __finish_scan(self, url: str, target_method: callable, output_format: Union[None, str], out_file: Union[None, str]) -> str:
+		# Wait for scan to complete.
+		result = self.__wait_complete(url, target_method)
+
+		# Return formatted result.
+		return self.__handle_output(result, output_format, out_file)
+
+
+
 	@check_types
 	def scan(self, file: str, av_list: Optional[list[str]]=None, output_format: Optional[str]=None, out_file: Optional[str]=None) -> str:
 		if not file_is_32mb(file):
@@ -185,17 +206,12 @@ class Kleenscan:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Extracted scan token {scan_token} for scan on file "{file}". File scanning process will begin, this will take some time, be patient..')
 
-		# Wait for scan to complete.
-		result = self.__wait_complete(f'https://kleenscan.com/api/v1/file/result/{scan_token}', self.__check_file_status)
-
-		# Format the result.
-		result = format_result(output_format, result)
-
-		# Handle out_file.
-		self.__handle_out_file(out_file, result)
-
-		# Finally return result regardless.
-		return result
+		# Return formatted result.
+		return self.__finish_scan(f'https://kleenscan.com/api/v1/file/result/{scan_token}',
+			self.__check_file_status,
+			output_format,
+			out_file
+		)
 
 
 
@@ -221,17 +237,12 @@ class Kleenscan:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Extracted route token {route_token} for scan on url "{url}". URL scanning process will begin, this will take some time, be patient..')
 
-		# Wait for scan to complete.
-		result = self.__wait_complete(f'https://kleenscan.com/api/v1/url/result/{route_token}', self.__check_url_status)
-
-		# Format the result.
-		result = format_result(output_format, result)
-
-		# Handle out_file.
-		self.__handle_out_file(out_file, result)
-
-		# Finally return result regardless.
-		return result
+		# Return formatted result.
+		return self.__finish_scan(f'https://kleenscan.com/api/v1/url/result/{route_token}',
+			self.__check_url_status,
+			output_format,
+			out_file
+		)
 
 
 
@@ -257,17 +268,12 @@ class Kleenscan:
 		# Notify the user.
 		self.logger.info(f'{INFO_NOTIF} Extracted scan token {scan_token} for scan on file hosted on server "{url}". File scanning process will begin, this will take some time, be patient..')
 
-		# Wait for scan to complete.
-		result = self.__wait_complete(f'https://kleenscan.com/api/v1/file/result/{scan_token}', self.__check_file_status)
-
-		# Format the result.
-		result = format_result(output_format, result)
-
-		# Handle out_file.
-		self.__handle_out_file(out_file, result)
-
-		# Finally return result regardless.
-		return result
+		# Return formatted result.
+		return self.__finish_scan(f'https://kleenscan.com/api/v1/file/result/{scan_token}',
+			self.__check_file_status,
+			output_format,
+			out_file
+		)
 
 
 
@@ -283,14 +289,8 @@ class Kleenscan:
 				for av_name in av_list:
 					self.logger.info(f'\t - {av_name}')
 
-		# Format the result.
-		result = format_result(output_format, result)
-
-		# Handle out_file.
-		self.__handle_out_file(out_file, result)
-
 		# Finally return result regardless.
-		return result
+		return self.__handle_output(result, output_format, out_file)
 
 
 
