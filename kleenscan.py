@@ -102,13 +102,18 @@ class Kleenscan:
 
 
 	# Wrapper method for accessing data structure.
-	def __check_file_status(self, api_data: list, checked_avs: list, detected_count: int) -> bool:
-		return self.__check_status(api_data['data'], checked_avs, detected_count)
+	def __check_file_status(self, api_data: list, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
+		data = api_data['data']
+		finished, detected_count = self.__check_status(data, checked_avs, detected_count)
+		return finished, detected_count, data
+
 
 
 	# Wrapper method for accessing data structure.
-	def __check_url_status(self, api_data: list, checked_avs: list, detected_count: int) -> bool:
-		return self.__check_status(api_data['data']['scanner_results'], checked_avs, detected_count)
+	def __check_url_status(self, api_data: list, checked_avs: list, detected_count: int) -> tuple[bool, int, list]:
+		data = api_data['data']['scanner_results']
+		finished, detected_count = self.__check_status(data, checked_avs, detected_count)
+		return finished, detected_count, data
 
 
 
@@ -117,13 +122,14 @@ class Kleenscan:
 		checked_avs = []
 		detected_count = 0
 		response_text = None
+		data = []
 		scan_start_time = datetime.utcnow()
 		self.logger.info(f'{INFO_NOTIF} Press CTRL+C to terminate the scanning process at any point and save results to stdout and an outfile provided.')
 		try:
 			while True:
 				response_text = self.ks_http.get_req(url)
 				api_data = json.loads(response_text)
-				finished, detected_count = target_method(api_data, checked_avs, detected_count)
+				finished, detected_count, data = target_method(api_data, checked_avs, detected_count)
 
 				# Check time in minutes, if equal to or greater than max minutes break the loop.
 				time_difference = datetime.utcnow() - scan_start_time
@@ -136,6 +142,12 @@ class Kleenscan:
 		except KeyboardInterrupt:
 			pass
 
+		# Notify the user of unfinished antivirus engines.
+		for av_dict in data:
+			av_name = av_dict['avname']
+			if av_name not in checked_avs:
+				self.logger.info(f'{INFO_NOTIF} antivirus engine {av_name} scanning incomplete with status {av_dict["status"]}')
+		
 		self.logger.info(f'Detection ratio: {detected_count} / {len(checked_avs)}')
 		return response_text
 

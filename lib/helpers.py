@@ -109,10 +109,11 @@ def check_types(func):
       
                 # Check if all values are string in a list.
                 elif param_type == list:
-                    for element in value:
-                        if not isinstance(element, str):
-                            raise TypeError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be a list of strings, got: {value}.')
-  
+                    if value:
+                        for element in value:
+                            if not isinstance(element, str):
+                                raise TypeError(f'Argument "{param_name}" to Kleenscan.{func.__name__} must be a list of strings, got: {value}.')
+      
 
         return func(*args, **kwargs)
 
