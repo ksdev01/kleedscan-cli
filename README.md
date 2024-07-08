@@ -130,8 +130,9 @@ import json
 TOKEN = '<insert_api_token_here>'
 
 def get_av(api_data, av_quey):
+    av_query = av_query.lower()
     for av_name, av_desc in api_data.items():
-        if av_query.lower() in av_name or av_desc.lower():
+        if av_query in av_name or av_query in av_desc.lower():
             return av_name
     raise ValueError(f'{av_query} not found')
 
