@@ -18,7 +18,7 @@ from .lib.helpers import *
 
 class Kleenscan:
 	@check_types
-	def __init__(self, x_auth_token: str, verbose=True, max_minutes=MAX_SCAN_TIME):
+	def __init__(self, x_auth_token: str, verbose: Optional[bool]=True, max_minutes: Optional[int]=MAX_SCAN_TIME):
 		self.ks_http = Ks_http(x_auth_token)
 		self.check_token()
 		self.logger = configure_logging() if verbose else logging
