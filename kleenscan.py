@@ -86,7 +86,7 @@ class Kleenscan:
 					self.logger.info(f'{SUCCESS_NOTIF} {av_name}: {flag_name}')
 
 				# Issue with AV vendor.
-				elif flag_name == 'Scanning results incomplete':
+				elif flag_name in ('Scanning results incomplete', 'Unknown')::
 					self.logger.info(f'{INFO_NOTIF} {av_name}: {flag_name}')
 
 				# AV detected the file/url.
