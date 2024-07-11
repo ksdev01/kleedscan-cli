@@ -1,9 +1,9 @@
-
 # Custom Library imports:
 from .cli_colors import *
 
-MAX_FILE_MB = 32
 
+MAX_REMAINING_AVS = 4
+MAX_FILE_MB = 32
 MAX_SCAN_TIME = 4
 
 URL_CTEXT = colored(CYAN_COLOR, 'https://kleenscan.com/api_management')

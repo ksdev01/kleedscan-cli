@@ -138,7 +138,7 @@ class Kleenscan:
 
 				# Check time in minutes, if equal to or greater than max minutes break the loop.
 				time_difference = datetime.utcnow() - scan_start_time
-				if finished or (time_difference.seconds >= self.max_minutes * 60):
+				if finished or (time_difference.seconds >= self.max_minutes * 60) or (len(checked_avs) >= len(data)-MAX_REMAINING_AVS):
 					break
 
 				# Delay execution.
