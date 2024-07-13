@@ -55,3 +55,9 @@ class KsFileDownloadFailedError(Exception):
 class KsDeadLinkError(Exception):
     def __init__(self, message: str):
         super().__init__(f'The URL/server hosting the file cannot be conneceted to: {message}')
+
+
+
+class KsHttpError(Exception):
+    def __init__(self, status_code: int):
+        super().__init__(f'Kleenscan\'s server responded with a non 200 HTTP status code. This is likely due to rate-limits, if the status code is 429 a rate-limit was issued and too many requests were sent at once. Returned status code: {status_code}')

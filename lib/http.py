@@ -7,6 +7,8 @@ from typing import *
 from .files import read_file
 from .errors import *
 
+
+
 class Ks_http:
 	def __init__(self, x_auth_token: str):
 		self.headers = {'X-Auth-Token': x_auth_token}
@@ -14,9 +16,12 @@ class Ks_http:
 
 
 	@staticmethod
-	def __handle_api_errors(response_text: str) -> None:
-		if '"httpResponseCode":200' not in response_text:
-			raise KsApiError(response_text)
+	def __handle_api_errors(response: requests.Response) -> None:
+		if response.status_code != 200:
+			raise KsHttpError(response.status_code)
+
+		if '"httpResponseCode":200' not in response.text:
+			raise KsApiError(response.text)
 
 
 
@@ -26,7 +31,7 @@ class Ks_http:
 			files=files,
 			data=data
 		) as response:
-			self.__handle_api_errors(response.text)
+			self.__handle_api_errors(response)
 			return json.loads(response.text)
 
 
@@ -35,7 +40,7 @@ class Ks_http:
 		with requests.get(url,
 			headers=self.headers,
 		) as response:
-			self.__handle_api_errors(response.text)
+			self.__handle_api_errors(response)
 			return response.text
 
 
@@ -44,7 +49,7 @@ class Ks_http:
 		with requests.get(url,
 			headers=self.headers,
 		) as response:
-			self.__handle_api_errors(response.text)
+			self.__handle_api_errors(response)
 			return json.loads(response.text)
 
 

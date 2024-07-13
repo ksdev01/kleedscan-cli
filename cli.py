@@ -76,7 +76,8 @@ def main():
 			KsGetFileInfoFailedError,
 			KsNoFileHostedError,
 			KsFileDownloadFailedError,
-			KsDeadLinkError
+			KsDeadLinkError,
+			KsHttpError
 		) as e:
 			sys.exit(f'[ERROR] {e}')
 
